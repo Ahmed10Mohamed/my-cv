@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ahmed Bakri - Senior Full Stack Developer</title>
+    <style>
+      :root {
+        --navy: #132238;
+        --accent: #00b8a9;
+        --gold: #ffb703;
+        --text: #111827;
+        --muted: #64748b;
+        --card: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: radial-gradient(
+          circle at top left,
+          #e1fffb 0,
+          #f4f7fb 35%,
+          #eef2f7 100%
+        );
+        color: var(--text);
+      }
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 40px;
+        align-items: center;
+        padding: 70px max(6vw, 40px);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--navy), #17365f 52%, #071421);
+        color: #fff;
+      }
+      .hero:before,
+      .hero:after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(4px);
+        opacity: 0.45;
+        animation: float 8s ease-in-out infinite;
+      }
+      .hero:before {
+        width: 360px;
+        height: 360px;
+        background: var(--accent);
+        top: -120px;
+        right: 8%;
+      }
+      .hero:after {
+        width: 240px;
+        height: 240px;
+        background: var(--gold);
+        bottom: -80px;
+        left: 8%;
+        animation-delay: 1.2s;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-28px) translateX(18px);
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes typing {
+        to {
+          width: 100%;
+        }
+      }
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+      .kicker {
+        color: var(--gold);
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        animation: fadeUp 0.7s both;
+      }
+      .name {
+        font-size: clamp(44px, 7vw, 88px);
+        line-height: 0.95;
+        margin: 16px 0 14px;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        animation: fadeUp 0.9s 0.1s both;
+      }
+      .role {
+        font-size: clamp(20px, 3vw, 34px);
+        color: #c9fff9;
+        font-weight: 800;
+        animation: fadeUp 0.9s 0.2s both;
+      }
+      .typing {
+        font-size: 18px;
+        color: #d8e5f2;
+        margin-top: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid var(--accent);
+        width: 0;
+        animation:
+          typing 4s steps(90, end) 0.8s forwards,
+          blink 0.7s infinite;
+      }
+      .hero-card {
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(12px);
+        border-radius: 30px;
+        padding: 32px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        animation: fadeUp 1s 0.35s both;
+      }
+      .contact a,
+      .contact span {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        margin: 10px 0;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        transition: 0.3s;
+      }
+      .contact a:hover {
+        transform: translateX(8px);
+        background: rgba(0, 184, 169, 0.22);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 20px;
+        padding: 18px;
+        text-align: center;
+        animation: fadeUp 0.7s both;
+      }
+      .stat strong {
+        display: block;
+        font-size: 32px;
+        color: var(--gold);
+      }
+      .section {
+        padding: 80px max(6vw, 40px);
+      }
+      .section h2 {
+        font-size: 40px;
+        margin: 0 0 30px;
+        color: var(--navy);
+        letter-spacing: -0.04em;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .card,
+      .job {
+        background: var(--card);
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+        transform: translateY(30px);
+        opacity: 0;
+        transition: 0.7s;
+      }
+      .card.show,
+      .job.show {
+        transform: none;
+        opacity: 1;
+      }
+      .card h3 {
+        margin: 0 0 10px;
+        color: var(--accent);
+      }
+      .card p {
+        color: #334155;
+        line-height: 1.55;
+      }
+      .progress {
+        height: 9px;
+        background: #e2e8f0;
+        border-radius: 999px;
+        margin-top: 16px;
+        overflow: hidden;
+      }
+      .bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), var(--gold));
+        transition: 1.2s ease;
+      }
+      .show .bar {
+        width: var(--w);
+      }
+      .job {
+        margin-bottom: 22px;
+      }
+      .job h3 {
+        margin: 0;
+        color: var(--navy);
+      }
+      .job .meta {
+        color: var(--accent);
+        font-weight: 800;
+        margin: 6px 0 12px;
+      }
+      .job ul {
+        margin: 0;
+        padding-left: 20px;
+        line-height: 1.65;
+        color: #334155;
+      }
+      .cta {
+        background: linear-gradient(135deg, var(--navy), #071421);
+        color: white;
+        text-align: center;
+        border-radius: 34px;
+        margin: 30px max(6vw, 40px) 70px;
+        padding: 44px;
+      }
+
+      /* Animated Professional Summary */
+      .summary-section {
+        position: relative;
+        padding: 95px max(6vw, 40px);
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          #f8fafc 0%,
+          #ecfeff 48%,
+          #f1f5f9 100%
+        );
+      }
+      .summary-section:before,
+      .summary-section:after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(2px);
+        opacity: 0.28;
+        animation: summaryFloat 9s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .summary-section:before {
+        width: 300px;
+        height: 300px;
+        background: var(--accent);
+        right: -90px;
+        top: 20px;
+      }
+      .summary-section:after {
+        width: 230px;
+        height: 230px;
+        background: var(--gold);
+        left: -70px;
+        bottom: 20px;
+        animation-delay: 1.4s;
+      }
+      @keyframes summaryFloat {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        50% {
+          transform: translate3d(26px, -24px, 0) scale(1.08);
+        }
+      }
+      .summary-wrap {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1.35fr 0.65fr;
+        gap: 26px;
+        align-items: stretch;
+      }
+      .summary-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(0, 184, 169, 0.18);
+        border-radius: 32px;
+        padding: 34px;
+        box-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
+        overflow: hidden;
+        transform: translateY(38px) scale(0.98);
+        opacity: 0;
+        transition: 900ms cubic-bezier(0.2, 0.75, 0.2, 1);
+      }
+      .summary-card.show {
+        transform: none;
+        opacity: 1;
+      }
+      .summary-card:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        padding: 1px;
+        border-radius: 32px;
+        background: linear-gradient(
+          120deg,
+          rgba(0, 184, 169, 0.85),
+          rgba(255, 183, 3, 0.65),
+          rgba(19, 34, 56, 0.55)
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.72;
+      }
+      .summary-card:after {
+        content: "";
+        position: absolute;
+        top: -60%;
+        left: -20%;
+        width: 55%;
+        height: 220%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.55),
+          transparent
+        );
+        transform: rotate(18deg) translateX(-140%);
+        animation: shine 5.2s ease-in-out infinite 1s;
+        pointer-events: none;
+      }
+      @keyframes shine {
+        0%,
+        35% {
+          transform: rotate(18deg) translateX(-140%);
+        }
+        60%,
+        100% {
+          transform: rotate(18deg) translateX(260%);
+        }
+      }
+      .summary-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--accent);
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      .summary-kicker:before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 8px rgba(0, 184, 169, 0.12);
+        animation: pulseDot 1.7s infinite;
+      }
+      @keyframes pulseDot {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 8px rgba(0, 184, 169, 0.12);
+        }
+        50% {
+          transform: scale(0.82);
+          box-shadow: 0 0 0 14px rgba(0, 184, 169, 0);
+        }
+      }
+      .summary-card h2 {
+        font-size: clamp(30px, 4.3vw, 54px);
+        line-height: 1.05;
+        margin: 18px 0 18px;
+        color: var(--navy);
+        letter-spacing: -0.055em;
+      }
+      .summary-lead {
+        font-size: 18px;
+        line-height: 1.75;
+        color: #334155;
+        margin: 0;
+        max-width: 940px;
+      }
+      .summary-lead strong {
+        color: var(--navy);
+      }
+      .summary-highlight {
+        color: var(--accent);
+        font-weight: 900;
+      }
+      .summary-typing-box {
+        margin: 24px 0 4px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-weight: 900;
+        color: var(--navy);
+      }
+      .summary-label {
+        color: #64748b;
+        font-weight: 800;
+      }
+      .summary-rotator {
+        position: relative;
+        display: inline-grid;
+        min-width: 310px;
+        height: 32px;
+        overflow: hidden;
+      }
+      .summary-rotator span {
+        grid-area: 1/1;
+        color: var(--accent);
+        opacity: 0;
+        transform: translateY(28px);
+        animation: rotateSummary 12s infinite;
+      }
+      .summary-rotator span:nth-child(2) {
+        animation-delay: 3s;
+      }
+      .summary-rotator span:nth-child(3) {
+        animation-delay: 6s;
+      }
+      .summary-rotator span:nth-child(4) {
+        animation-delay: 9s;
+      }
+      @keyframes rotateSummary {
+        0% {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        6%,
+        22% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        28%,
+        100% {
+          opacity: 0;
+          transform: translateY(-24px);
+        }
+      }
+      .summary-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+      .summary-pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #dbeafe;
+        background: #fff;
+        color: #17365f;
+        border-radius: 999px;
+        padding: 10px 14px;
+        font-weight: 800;
+        font-size: 13px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        transform: translateY(18px);
+        opacity: 0;
+        transition: 0.65s;
+      }
+      .summary-pill.show {
+        transform: none;
+        opacity: 1;
+      }
+      .summary-pill:nth-child(2) {
+        transition-delay: 0.05s;
+      }
+      .summary-pill:nth-child(3) {
+        transition-delay: 0.1s;
+      }
+      .summary-pill:nth-child(4) {
+        transition-delay: 0.15s;
+      }
+      .summary-pill:nth-child(5) {
+        transition-delay: 0.2s;
+      }
+      .summary-pill:nth-child(6) {
+        transition-delay: 0.25s;
+      }
+      .summary-metrics {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .summary-metric {
+        position: relative;
+        background: rgba(19, 34, 56, 0.95);
+        color: white;
+        border-radius: 28px;
+        padding: 24px;
+        box-shadow: 0 22px 55px rgba(19, 34, 56, 0.22);
+        overflow: hidden;
+        transform: translateX(35px);
+        opacity: 0;
+        transition: 900ms cubic-bezier(0.2, 0.75, 0.2, 1);
+      }
+      .summary-metric.show {
+        transform: none;
+        opacity: 1;
+      }
+      .summary-metric:before {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: rgba(0, 184, 169, 0.22);
+        right: -45px;
+        top: -45px;
+      }
+      .summary-metric strong {
+        display: block;
+        font-size: 38px;
+        line-height: 1;
+        color: var(--gold);
+        margin-bottom: 8px;
+      }
+      .summary-metric span {
+        color: #dbeafe;
+        font-weight: 800;
+      }
+      .summary-metric p {
+        margin: 8px 0 0;
+        color: #cbd5e1;
+        line-height: 1.55;
+        font-size: 14px;
+      }
+
+      @media (max-width: 1100px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .summary-wrap {
+          grid-template-columns: 1fr;
+        }
+        .summary-metrics {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 52px 24px;
+        }
+        .grid,
+        .stats,
+        .summary-metrics {
+          grid-template-columns: 1fr;
+        }
+        .typing {
+          white-space: normal;
+          border: none;
+          animation: fadeUp 1s 0.8s both;
+          width: auto;
+        }
+        .summary-section {
+          padding: 58px 24px;
+        }
+        .summary-card {
+          padding: 24px;
+          border-radius: 24px;
+        }
+        .summary-rotator {
+          min-width: 100%;
+          height: 34px;
+        }
+        .summary-card h2 {
+          font-size: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div style="position: relative; z-index: 2">
+        <div class="kicker">All Details Edition</div>
+        <h1 class="name">Ahmed<br />Mohammed<br />Bakri</h1>
+        <div class="role">Senior Full Stack Developer</div>
+        <div class="typing">
+          8+ years building Laravel, Node.js, React.js, Vue.js, SaaS, APIs,
+          payments, DevOps and scalable platforms.
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>8+</strong><span>Years</span></div>
+          <div class="stat">
+            <strong>99%+</strong><span>Payment Success</span>
+          </div>
+          <div class="stat">
+            <strong>30-40%</strong><span>Bug Reduction</span>
+          </div>
+          <div class="stat">
+            <strong>25-30%</strong><span>Query Gains</span>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <h3>Contact</h3>
+        <div class="contact">
+          <a target="_blank" href="mailto:ahmed.bakrigis@gmail.com"
+            >ahmed.bakrigis@gmail.com</a
+          >
+          <a target="_blank" href="https://my-portfolio.ahmed-bakrigis.workers.dev"
+            >Portfolio</a
+          >
+          <a target="_blank" href="https://linkedin.com/in/ahmedmbakri"
+            >linkedin Profile</a
+          >
+          <a target="_blank" href="https://github.com/Ahmed10Mohamed"
+            >github Profile</a
+          ><a target="_blank" href="https://wa.me/201015891836"
+            >WhatsApp</a
+          ><a
+            target="_blank"
+            href="https://wuzzuf.net/me/Ahmed-Bakri-22cdc7fc83"
+            >Wuzzuf Profile</a
+          ><span>Egypt - Bani Suef</span>
+        </div>
+      </aside>
+    </header>
+
+    <section class="summary-section" id="professional-summary">
+      <div class="summary-wrap">
+        <article class="summary-card">
+          <div class="summary-kicker">Professional Summary</div>
+          <h2>
+            Building scalable products from backend architecture to modern
+            frontend experiences.
+          </h2>
+          <p class="summary-lead">
+            Experienced and results-driven
+            <strong>Senior Full Stack Developer</strong> with
+            <span class="summary-highlight">8+ years</span> of hands-on
+            experience building secure, scalable, and high-performance web
+            applications. Strong backend expertise in
+            <strong>Native PHP, Laravel, and Node.js</strong>, combined with
+            frontend delivery using
+            <strong
+              >React.js, Vue.js, JavaScript, TypeScript, and responsive
+              UI</strong
+            >. Skilled in RESTful APIs, authentication, payment integrations,
+            database optimization, DevOps workflows, testing, caching, queues,
+            and clean architecture.
+          </p>
+          <div class="summary-typing-box">
+            <span class="summary-label">Core focus:</span>
+            <span class="summary-rotator">
+              <span>Laravel, Native PHP & Node.js platforms</span>
+              <span>React.js, Vue.js & modern frontend UI</span>
+              <span>APIs, payments, SaaS & scalable systems</span>
+              <span>Performance, testing, DevOps & leadership</span>
+            </span>
+          </div>
+          <div class="summary-pills">
+            <span class="summary-pill">Clean Architecture</span>
+            <span class="summary-pill">SOLID Principles</span>
+            <span class="summary-pill">Microservices</span>
+            <span class="summary-pill">AWS / Docker / CI-CD</span>
+            <span class="summary-pill">Database Optimization</span>
+            <span class="summary-pill">Mentoring & Code Reviews</span>
+          </div>
+        </article>
+        <aside class="summary-metrics">
+          <div class="summary-metric">
+            <strong>8+</strong><span>Years Experience</span>
+            <p>
+              Full stack development across Laravel, PHP, Node.js, React.js, and
+              Vue.js.
+            </p>
+          </div>
+          <div class="summary-metric">
+            <strong>99%+</strong><span>Payment Success</span>
+            <p>
+              Improved checkout and payment integrations for reliable
+              transactions.
+            </p>
+          </div>
+          <div class="summary-metric">
+            <strong>40%</strong><span>Fewer Production Bugs</span>
+            <p>
+              Applied PHPUnit, Laravel Dusk, API testing, and better engineering
+              workflows.
+            </p>
+          </div>
+          <div class="summary-metric">
+            <strong>30%</strong><span>Faster Queries</span>
+            <p>
+              Optimized MySQL/PostgreSQL structures, indexing, caching, and load
+              performance.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Complete Skill Highlights</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>FRONTEND</h3>
+          <p>
+            React, Vue.js, JavaScript, TypeScript, TailwindCSS, Responsive UI/UX
+          </p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>BACKEND</h3>
+          <p>
+            PHP Native, PHP Laravel, Node.js, RESTful APIs, Authentication &amp;
+            Authorization
+          </p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>DATABASES</h3>
+          <p>MySQL, PostgreSQL, MongoDB, Query Optimization, Indexing</p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>DEVOPS</h3>
+          <p>Docker, CI/CD, GitHub Actions, AWS (EC2, S3, RDS), Nginx</p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>ARCHITECTURE</h3>
+          <p>
+            Microservices, Clean Architecture, SOLID principles, SaaS,
+            Multi-tenancy
+          </p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>TESTING</h3>
+          <p>PHPUnit, Jest, Integration, Laravel Dusk &amp; API testing</p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>PERFORMANCE</h3>
+          <p>Caching, Queues, Load Optimization, Scalability, Redis, Workers</p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+        <div class="card">
+          <h3>TEAM SKILLS</h3>
+          <p>
+            Agile, Code Reviews, Mentoring, Technical Leadership,
+            Cross-functional Collaboration
+          </p>
+          <div class="progress"><div class="bar" style="--w: 92%"></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Complete Experience Timeline</h2>
+      <div class="timeline">
+        <article class="job">
+          <h3>Team Lead Backend Developer</h3>
+          <div class="meta">handOne Company | Nov 2023 - Feb 2026 | Remote</div>
+          <ul>
+            <li>
+              Led a high-performing backend engineering team to deliver
+              scalable, secure, and high-availability platforms using
+              PHP/Laravel, supporting thousands of concurrent users.
+            </li>
+            <li>
+              Designed and optimized advanced MySQL database structures,
+              reducing query latency by 25% and improving overall data
+              consistency and throughput.
+            </li>
+            <li>
+              Oversaw the end-to-end API lifecycle: architecture, development,
+              documentation, integration, and delivery using REST standards.
+            </li>
+            <li>
+              Directed and optimized multiple payment gateway integrations,
+              achieving 99%+ successful transactions and improving checkout
+              performance.
+            </li>
+            <li>
+              Enforced Clean Code, SOLID, and architectural best practices,
+              reducing production bugs by 30% and increasing development
+              efficiency.
+            </li>
+            <li>
+              Mentored and upskilled team members through structured weekly
+              sessions, resulting in two developer promotions during tenure.
+            </li>
+            <li>
+              Collaborated with Product, Frontend, and QA teams to deliver
+              business-focused features while maintaining high engineering
+              standards.
+            </li>
+          </ul>
+        </article>
+        <article class="job">
+          <h3>Senior Backend Developer</h3>
+          <div class="meta">
+            Astro Company (Part-Time) | Nov 2023 - Apr 2024 | Remote
+          </div>
+          <ul>
+            <li>
+              Spearheaded backend development for high-traffic applications
+              using PHP and Laravel, improving system scalability, security, and
+              performance.
+            </li>
+            <li>
+              Designed and optimized MySQL schemas and queries, achieving a 25%
+              improvement in response times.
+            </li>
+            <li>
+              Ensured seamless API integration with frontend teams, enhancing
+              user experience across web and mobile platforms.
+            </li>
+            <li>
+              Led the development and optimization of payment gateway
+              integrations, reaching a 99% transaction success rate and
+              improving checkout performance.
+            </li>
+          </ul>
+        </article>
+        <article class="job">
+          <h3>Senior Backend Developer</h3>
+          <div class="meta">
+            ALWessam Company (Full-Time) | Aug 2022 - Oct 2023 | Remote
+          </div>
+          <ul>
+            <li>
+              Directed backend development for scalable web applications,
+              utilizing Laravel for robust and secure backend operations.
+            </li>
+            <li>
+              Achieved a 30% reduction in database query times by refactoring
+              and optimizing queries.
+            </li>
+            <li>
+              Mentored a team of 5 developers, fostering a culture of code
+              quality and best practices.
+            </li>
+            <li>
+              Implemented comprehensive testing protocols with PHPUnit and
+              Laravel Dusk, reducing bugs in production by 40%.
+            </li>
+          </ul>
+        </article>
+        <article class="job">
+          <h3>Senior Backend Developer</h3>
+          <div class="meta">
+            Matrix Cloud, Egypt | Jul 2019 - Aug 2022 | Cairo, Egypt
+          </div>
+          <ul>
+            <li>
+              Architected and delivered scalable RESTful APIs and backend
+              services using Laravel, enhancing reliability and response times
+              for high-traffic applications.
+            </li>
+            <li>
+              Applied SOLID principles, Clean Architecture, and design patterns
+              to deliver maintainable, modular, and testable code.
+            </li>
+            <li>
+              Improved performance through MySQL query optimization, indexing,
+              and Redis caching, significantly reducing server load.
+            </li>
+            <li>
+              Built and managed microservices, background workers, and
+              asynchronous pipelines using queues, events, and workers.
+            </li>
+            <li>
+              Implemented secure authentication and authorization using JWT,
+              OAuth2, Passport, and Sanctum in alignment with OWASP practices.
+            </li>
+            <li>
+              Automated deployment pipelines using CI/CD workflows with Docker,
+              GitHub Actions, and AWS services: EC2, S3, RDS, and CloudWatch.
+            </li>
+            <li>
+              Collaborated with cross-functional teams to deliver
+              well-documented, high-quality APIs for mobile and web apps.
+            </li>
+            <li>
+              Led code reviews and ensured adherence to engineering best
+              practices across multiple projects.
+            </li>
+            <li>
+              Designed scalable database schemas to support high-volume
+              transactional systems.
+            </li>
+            <li>
+              Implemented monitoring, logging, and alerting using Sentry,
+              CloudWatch, and custom logging pipelines to ensure system
+              stability.
+            </li>
+          </ul>
+        </article>
+        <article class="job">
+          <h3>Backend Developer</h3>
+          <div class="meta">
+            Progmine Company | Jan 2019 - Jun 2019 | Cairo, Egypt
+          </div>
+          <ul>
+            <li>
+              Contributed to backend feature development aligned with project
+              requirements, collaborating effectively with the engineering team.
+            </li>
+            <li>
+              Supported API development and database tasks, gaining hands-on
+              experience with Laravel and backend workflows.
+            </li>
+          </ul>
+        </article>
+        <article class="job">
+          <h3>Junior PHP Developer</h3>
+          <div class="meta">
+            BSS Group / We Oryx Company | Feb 2018 - Jan 2019 | Bani Sweif,
+            Egypt
+          </div>
+          <ul>
+            <li>
+              Assisted senior developers in delivering new backend features
+              using PHP and Laravel.
+            </li>
+            <li>
+              Learned and adopted backend development best practices, gaining
+              practical experience with APIs, databases, and server operations.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <div class="cta">
+      <h2>Senior Full Stack Developer ready to build scalable products.</h2>
+      <p>
+        PHP Native | Laravel | Node.js | React.js | Vue.js | TypeScript | Docker
+        | AWS | Testing | Performance
+      </p>
+    </div>
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("show");
+          }),
+        { threshold: 0.15 },
+      );
+      document
+        .querySelectorAll(
+          ".card,.job,.summary-card,.summary-metric,.summary-pill",
+        )
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
